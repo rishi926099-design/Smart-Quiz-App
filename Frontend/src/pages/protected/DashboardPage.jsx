@@ -17,7 +17,6 @@ import {
   ShieldCheck,
   User as UserIcon,
 } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -69,8 +68,12 @@ const adminMenuItems = [
     icon: BrainCircuit,
     link: "/dashboard",
   },
+  {
+    title: "Manage Categories",
+    icon: FileText,
+    link: "/dashboard/categories",
+  },
 ];
-
 export default function DashboardPage() {
   const { user, logout } = useAuthContext();
   const navigate = useNavigate();
@@ -98,7 +101,11 @@ export default function DashboardPage() {
   const getInitials = (name) => {
     if (!name) return "U";
     const parts = name.split(" ");
-    return parts.map((p) => p[0]).slice(0, 2).join("").toUpperCase();
+    return parts
+      .map((p) => p[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase();
   };
 
   const toggleTheme = () => {
@@ -107,7 +114,10 @@ export default function DashboardPage() {
 
   const isRouteActive = (link) => {
     if (link === "/dashboard") {
-      return location.pathname === "/dashboard" || location.pathname === "/dashboard/";
+      return (
+        location.pathname === "/dashboard" ||
+        location.pathname === "/dashboard/"
+      );
     }
     return location.pathname.startsWith(link);
   };
@@ -118,7 +128,6 @@ export default function DashboardPage() {
         {/* Left Sidebar */}
         <Sidebar className="border-r border-border bg-card">
           <SidebarContent className="flex flex-col justify-between h-full py-4">
-            
             <div className="space-y-6">
               {/* Brand Header */}
               <div className="px-6 flex items-center gap-3">
@@ -126,8 +135,12 @@ export default function DashboardPage() {
                   <BrainCog size={22} className="animate-pulse" />
                 </div>
                 <div>
-                  <h1 className="text-lg font-bold tracking-tight text-foreground">Quizify</h1>
-                  <span className="text-[10px] font-medium text-indigo-500 uppercase tracking-widest block">Dashboard</span>
+                  <h1 className="text-lg font-bold tracking-tight text-foreground">
+                    Quizify
+                  </h1>
+                  <span className="text-[10px] font-medium text-indigo-500 uppercase tracking-widest block">
+                    Dashboard
+                  </span>
                 </div>
               </div>
 
@@ -140,14 +153,24 @@ export default function DashboardPage() {
                     {getInitials(user.name)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-foreground truncate">{user.name}</p>
-                    <p className="text-[10px] text-muted-foreground truncate">{user.email || "user@quizify.com"}</p>
-                    <span className={`inline-flex items-center gap-1 text-[9px] font-bold uppercase px-1.5 py-0.5 rounded mt-1.5 ${
-                      user.role?.name === "admin"
-                        ? "bg-violet-500/10 text-violet-500 border border-violet-500/20"
-                        : "bg-slate-500/10 text-slate-500 border border-slate-500/20"
-                    }`}>
-                      {user.role?.name === "admin" ? <ShieldCheck size={9} /> : <UserIcon size={9} />}
+                    <p className="text-xs font-semibold text-foreground truncate">
+                      {user.name}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground truncate">
+                      {user.email || "user@quizify.com"}
+                    </p>
+                    <span
+                      className={`inline-flex items-center gap-1 text-[9px] font-bold uppercase px-1.5 py-0.5 rounded mt-1.5 ${
+                        user.role?.name === "admin"
+                          ? "bg-violet-500/10 text-violet-500 border border-violet-500/20"
+                          : "bg-slate-500/10 text-slate-500 border border-slate-500/20"
+                      }`}
+                    >
+                      {user.role?.name === "admin" ? (
+                        <ShieldCheck size={9} />
+                      ) : (
+                        <UserIcon size={9} />
+                      )}
                       {user.role?.name || "Student"}
                     </span>
                   </div>
@@ -187,7 +210,7 @@ export default function DashboardPage() {
                         <SidebarGroupLabel className="px-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 mb-2 block">
                           Admin Controls
                         </SidebarGroupLabel>
-                        
+
                         {adminMenuItems.map((item) => {
                           const active = isRouteActive(item.link);
                           return (
@@ -216,7 +239,7 @@ export default function DashboardPage() {
             {/* Sidebar Footer Operations */}
             <div className="px-4 space-y-2.5">
               <Separator className="bg-border/60" />
-              
+
               {/* Theme Toggle inside Sidebar */}
               <div className="flex items-center justify-between px-2 text-sm text-muted-foreground">
                 <span>Display Theme</span>
@@ -243,7 +266,6 @@ export default function DashboardPage() {
                 <span>Sign Out</span>
               </Button>
             </div>
-            
           </SidebarContent>
         </Sidebar>
 
@@ -254,12 +276,18 @@ export default function DashboardPage() {
             <SidebarTrigger className="cursor-pointer" />
             <Separator orientation="vertical" className="h-4 bg-border" />
             <div className="flex-1 text-xs text-muted-foreground font-medium flex items-center gap-2">
-              <span className="capitalize">{location.pathname.split("/").filter(Boolean)[0] || "Home"}</span>
+              <span className="capitalize">
+                {location.pathname.split("/").filter(Boolean)[0] || "Home"}
+              </span>
               {location.pathname.split("/").filter(Boolean).length > 1 && (
                 <>
                   <span>/</span>
                   <span className="font-semibold text-foreground capitalize">
-                    {location.pathname.split("/").filter(Boolean).slice(1).join(" / ")}
+                    {location.pathname
+                      .split("/")
+                      .filter(Boolean)
+                      .slice(1)
+                      .join(" / ")}
                   </span>
                 </>
               )}
@@ -277,4 +305,3 @@ export default function DashboardPage() {
     </SidebarProvider>
   );
 }
-

@@ -7,7 +7,7 @@ import cors from "cors";
 
 const app = express();
 
-import "./utils/db.js";
+import "./Utils/db.js";
 
 import authRouter from "./routes/auth.route.js";
 import categoryRouter from "./routes/category.route.js";
@@ -40,7 +40,7 @@ app.use("/api/v1", questionRouter);
 app.use("/api/v1", attemptRouter);
 app.use("/api/v1", leaderboardRouter);
 app.use("/api/v1", userRouter);
-app.use("/api/ai", aiRouter);
+app.use("/api/v1/ai", aiRouter);
 
 app.use(exceptionHandler);
 

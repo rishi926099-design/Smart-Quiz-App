@@ -14,7 +14,9 @@ import SignupPage from "./pages/public/SignupPage.jsx";
 import { AuthProvider } from "./context/AuthContext";
 
 import DashboardPage from "./pages/protected/DashboardPage.jsx";
-// import DashboardHome from "./pages/protected/DashboardHome.jsx";
+import GenerateQuizPage from "./pages/protected/GenerateQuizPage";
+//import DashboardHome from "./pages/protected/DashboardHome.jsx";
+import ManageCategoriesPage from "./pages/protected/ManageCategoriesPage";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -29,11 +31,15 @@ createRoot(document.getElementById("root")).render(
             <Route path="signup" element={<SignupPage />} />
             <Route path="features" element={<FeaturesPage />} />
           </Route>
-
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/dashboard" element={<DashboardPage />}>
+            <Route index element={<GenerateQuizPage />} />
+          </Route>
+          <Route path="/dashboard" element={<DashboardPage />}>
+            <Route index element={<GenerateQuizPage />} />
+            <Route path="categories" element={<ManageCategoriesPage />} />
+          </Route>
         </Routes>
-
       </AuthProvider>
     </ThemeProvider>
-  </BrowserRouter>
+  </BrowserRouter>,
 );
